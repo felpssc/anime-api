@@ -1,11 +1,11 @@
 import { v4 as uuid } from "uuid";
 
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn("uuid")
     	id: string;
 
     @Column()
@@ -14,7 +14,7 @@ export class User {
     @Column()
     	email: string;
 
-    @Column()
+    @Column({ select: false })
     	password: string;
     
     @Column()
