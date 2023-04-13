@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../../../../shared/infra/typeorm/data-source";
 import { ICreateUserDTO } from "../../../dtos/ICreateUserDTO";
-import { IUsersRepository } from "../../../repositories/IUsersRepository";
+import { FindByEmailOptions, IUsersRepository } from "../../../repositories/IUsersRepository";
 import { User } from "../entities/User";
 
 class UsersRepository implements IUsersRepository {
@@ -21,9 +21,12 @@ class UsersRepository implements IUsersRepository {
 		await this.repository.save(user);
 	}
 
-	async findByEmail(email: string): Promise<User> {
+	async findByEmail(email: string, options: FindByEmailOptions): Promise<User> {
 		const user = await this.repository.findOne({
-			where: { email }
+			where: { email },
+			select: options.includePassword 
+				? ["id", "name", "email", "password", "is_admin"] 
+				: ["id", "name", "email", "is_admin"]
 		});
 
 		return user;

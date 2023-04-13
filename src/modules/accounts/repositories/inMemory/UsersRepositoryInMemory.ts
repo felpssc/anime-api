@@ -6,14 +6,12 @@ class UsersRepositoryInMemory implements IUsersRepository {
 
 	users: User[] = [];
 
-	async create(data: ICreateUserDTO): Promise<User> {
+	async create(data: ICreateUserDTO): Promise<void> {
 		const user = new User();
 
 		Object.assign(user, data);
 
 		this.users.push(user);
-
-		return user;
 	}
 
 	async findByEmail(email: string): Promise<User> {
