@@ -37,7 +37,11 @@ class AuthenticateUserUseCase {
 			throw new AppError("Incorrect email or password.", 401);
 		}
 
-		const token = jwt.sign({}, auth.secret_token, {
+		const token = jwt.sign({
+			user: {
+				email: user.email
+			}
+		}, auth.secret_token, {
 			subject: user.id,
 			expiresIn: auth.expires_in_token
 		});
