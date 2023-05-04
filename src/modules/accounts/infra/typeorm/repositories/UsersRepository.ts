@@ -24,7 +24,7 @@ class UsersRepository implements IUsersRepository {
 	async findByEmail(email: string, options: FindByEmailOptions): Promise<User> {
 		const user = await this.repository.findOne({
 			where: { email },
-			select: options.includePassword 
+			select: options?.includePassword
 				? ["id", "name", "email", "password", "is_admin"] 
 				: ["id", "name", "email", "is_admin"]
 		});
