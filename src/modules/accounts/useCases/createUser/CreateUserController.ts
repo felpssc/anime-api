@@ -16,7 +16,7 @@ class CreateUserController implements IController {
 			password
 		});
 
-		return response.json();
+		return response.status(201).send();
 	}
 }
 

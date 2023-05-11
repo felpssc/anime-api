@@ -2,6 +2,7 @@ import "dotenv/config";
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../../../modules/accounts/infra/typeorm/entities/User";
+import { Clan } from "../../../modules/clans/infra/typeorm/entities/Clan";
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
 	database: process.env.DB_NAME,
 	synchronize: true,
 	logging: false,
-	entities: [User],
+	entities: [User, Clan],
 	migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
 	subscribers: [],
 });
