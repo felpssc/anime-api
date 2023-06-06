@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid"; 
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { Clan } from "../../../../clans/infra/typeorm/entities/Clan";
 
 @Entity("characters")
@@ -28,24 +28,24 @@ export class Character {
   	info: string;
 
   @Column("text", { array: true, default: [] })
-  	about: string[];
-
-  @Column()
+  	about: string[];	
+		
+	@Column()
   	clan_id: string;
-
-  @CreateDateColumn()
+		
+	@CreateDateColumn()
   	created_at: Date;
-
-  @UpdateDateColumn()
+		
+	@UpdateDateColumn()
   	updated_at: Date;
+		
+	@ManyToOne(() => Clan, clan => clan.id)
+	@JoinColumn({ name: "clan_id", referencedColumnName: "id" })
+		clan: Clan;
 
-  @ManyToOne(() => Clan)
-  @JoinColumn({ name: "clan_id" })
-  	clan: Clan;
-
-  constructor() {
+	constructor() {
   	if (!this.id) {
   		this.id = uuid();
   	}
-  }
+	}
 }

@@ -35,7 +35,6 @@ export class createCharacterTable1683827216873 implements MigrationInterface {
 				{
 					name: "clan_id",
 					type: "uuid",
-					isNullable: true,
 				},
 				{
 					name: "created_at",
@@ -50,17 +49,20 @@ export class createCharacterTable1683827216873 implements MigrationInterface {
 			]
 		}), true);
 
-		await queryRunner.createForeignKey("characters", new TableForeignKey({
-			name: "characters_clan_id_fk",
-			columnNames: ["clan_id"],
-			referencedColumnNames: ["id"],
-			referencedTableName: "clans",
-			onDelete: "CASCADE"
-		}));
+		await queryRunner.createForeignKey(
+			"characters", 
+			new TableForeignKey({
+				name: "FKCharacterClan",
+				columnNames: ["clan_id"],
+				referencedColumnNames: ["id"],
+				referencedTableName: "clans",
+				onDelete: "SET NULL",
+				onUpdate: "SET NULL"
+			}));
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropForeignKey("characters", "characters_clan_id_fk");
+		await queryRunner.dropForeignKey("characters", "FKCharacterClan");
 		await queryRunner.dropTable("characters");
 	}
 }

@@ -3,6 +3,7 @@ import { AppDataSource } from "../../../../../shared/infra/typeorm/data-source";
 import { ICreateCharacterDTO } from "../../../dtos/ICreateCharacterDTO";
 import { ICharactersRepository, IListCharactersFilters, IListCharactersResponse } from "../../../repositories/ICharactersRepository";
 import { Character } from "../entities/Character";
+import { defaultClanId } from "../../../../../config/clan";
 
 class CharactersRepository implements ICharactersRepository {
 	
@@ -13,6 +14,11 @@ class CharactersRepository implements ICharactersRepository {
 	}
   
 	async create(data: ICreateCharacterDTO): Promise<Character> {
+
+		if (!data.clan_id) {
+			data.clan_id = defaultClanId;
+		}
+
 		const character = this.repository.create(data);
 
 		await this.repository.save(character);
@@ -43,10 +49,9 @@ class CharactersRepository implements ICharactersRepository {
 			query.limit(limit);
 		}
 
-		// query.innerJoin("characters.info", "info", "info.id = characters.info_id");
+		query.leftJoinAndSelect("characters.clan", "clans");
 
-		const characters = await query.getMany();
-		const count =  await query.getCount();
+		const [ characters, count ] = await query.getManyAndCount();
 
 		return {  characters, count  };
 	}
