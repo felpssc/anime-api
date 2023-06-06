@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Character } from "../../../../characters/infra/typeorm/entities/Character";
 
 @Entity("clans")
 export class Clan {
@@ -21,9 +22,12 @@ export class Clan {
   @UpdateDateColumn()
   	updated_at: Date;
 
-  constructor() {
+	@OneToMany(() => Character, character => character.clan_id)
+		character: Character[];
+
+	constructor() {
   	if (!this.id) {
   		this.id = uuid();
   	}
-  }
+	}
 }
