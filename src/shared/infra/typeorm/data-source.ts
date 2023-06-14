@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { User } from "../../../modules/accounts/infra/typeorm/entities/User";
 import { Character } from "../../../modules/characters/infra/typeorm/entities/Character";
 import { Clan } from "../../../modules/clans/infra/typeorm/entities/Clan";
+import { CharacterImage } from "../../../modules/characters/infra/typeorm/entities/CharacterImage";
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
 	database: process.env.DB_NAME,
 	synchronize: true,
 	logging: false,
-	entities: [User, Clan, Character],
+	entities: [User, Clan, Character, CharacterImage],
 	migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
 	subscribers: [],
 });

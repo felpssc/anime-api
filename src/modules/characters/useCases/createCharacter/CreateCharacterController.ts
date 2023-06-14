@@ -11,7 +11,8 @@ class CreateCharacterController implements IController {
 			page,
 			clan_id,
 			about,
-			info
+			info,
+			images
 		}: ICreateCharacterDTO = request.body;
 
 		const createCharacterUseCase = container.resolve(CreateCharacterUseCase);
@@ -21,7 +22,8 @@ class CreateCharacterController implements IController {
 			page,
 			clan_id,
 			about,
-			info    
+			info,
+			images
 		} as ICreateCharacterDTO); 
 
 		return response.status(201).json(character);
