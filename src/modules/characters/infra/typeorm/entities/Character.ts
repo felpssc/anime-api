@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid"; 
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { Clan } from "../../../../clans/infra/typeorm/entities/Clan";
+import { CharacterImage } from "./CharacterImage";
 
 @Entity("characters")
 export class Character {
@@ -42,6 +43,9 @@ export class Character {
 	@ManyToOne(() => Clan, clan => clan.id)
 	@JoinColumn({ name: "clan_id", referencedColumnName: "id" })
 		clan: Clan;
+
+	@OneToMany(() => CharacterImage, character_image => character_image.character)
+		images: CharacterImage[];
 
 	constructor() {
   	if (!this.id) {
