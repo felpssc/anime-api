@@ -19,7 +19,13 @@ export class User {
     
     @Column()
     	is_admin: boolean;
+
+		@Column({ nullable: true, type: "varchar" })
+			avatar?: string;
     
+		@Column({ nullable: true, type: "timestamp" })
+			birth_date?: string;
+
     @CreateDateColumn()
     	created_at: Date;
 
