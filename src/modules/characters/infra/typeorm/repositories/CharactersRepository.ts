@@ -79,11 +79,11 @@ class CharactersRepository implements ICharactersRepository {
 		}
 
 		if  (offset) {
-			query.offset(offset);
+			query.skip(offset);
 		}
 
 		if (limit) {
-			query.limit(limit);
+			query.take(limit);
 		}
 
 		query.leftJoinAndSelect("characters.clan", "clans");
